@@ -1,0 +1,24 @@
+{
+  "name": "moviescript",
+  "version": "1.0.0",
+  "description": "stream any movie for free",
+  "main": "index.js",
+  "dependencies": {
+    "browserify-middleware": "^7.0.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mithril": "0.2.2-rc.1",
+    "nodemon": "^1.10.2",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "start": "open http://localhost:3003 && ./node_modules/.bin/nodemon server/index.js"
+  },
+  "contributors": [
+    "Jimmy Stevenson",
+    "Garret Holmes"
+  ],
+  "license": "ISC"
+}

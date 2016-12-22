@@ -1,0 +1,46 @@
+
+.auth-panel {
+  background: #ddd;
+  margin: 0 auto;
+  padding: 0.8rem;
+  width: 15rem;
+
+  .tabs {
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .tab {
+    background: #ccc;
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.4rem;
+  }
+  .tab.active {
+    background: white;
+    border: 1px solid #ccc;
+  }
+
+  label {
+    display: block;
+  }
+  input[type=text], input[type=password] {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .error {
+    background: #ff9e9e;
+    border: 1px solid #ff0a0a;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    .name { font-weight: bold; margin-bottom: 0.2rem; }
+  }
+
+  .flash {
+    background: #e5ffff;
+    border: 1px solid #adffff;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+  }
+}
