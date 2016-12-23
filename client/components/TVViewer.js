@@ -17,15 +17,30 @@ TVViewer.controller = function () {
       .then(function(movieLink){
         console.log(movieLink);
         window.location.href = movieLink;
+         /*
+         if(typeof movieLink === "string" && movieLink.slice(0,5) === 'Error'){
+          // change background of textBox to red
+          //formGroup.style = "form-group has-error";
+          ctrl.tvShow = 'Error';
+        } else {
+           console.log(movieLink);
+           window.location.href = movieLink;
+        }
+        */
       })
   };
   ctrl.searchShow = function(){
     console.log("show is: ", ctrl.tvShow);
     Tv.fetch(ctrl.tvShow)
       .then(function(seasonObj){
-        ctrl.showName = seasonObj.showName;
-        console.log(seasonObj);
-        ctrl.tvShows = seasonObj.data.slice(1);
+        if(typeof seasonObj === 'string' &&   seasonObj.slice(0,5) === 'Error'){
+            ctrl.tvShow = 'Error';
+        } else {
+          ctrl.showName = seasonObj.showName;
+          console.log(seasonObj);
+          ctrl.tvShows = seasonObj.data.slice(1);
+        }
+   
       })
     // window.location.href = 'http://localhost:3003/' + ctrl.movie;
   };
@@ -33,21 +48,33 @@ TVViewer.controller = function () {
 
 TVViewer.view = function (ctrl) {
   return m('.auth-panel', [    
-    m('form', 
+    m('form.form-group', 
       { onsubmit: function(e){ 
         e.preventDefault();
+        ctrl.searchShow();
       } 
     }, 
     [
-      m('input[type=text][name=tvshow]', {
+      m('input[type=text][name=tvshow][placeholder=Please type in a TV show...].form-control', {
         value: ctrl.tvShow,
-        oninput: function (e) { ctrl.tvShow = this.value }
+        oninput: function (episode) { 
+          if(this.value.slice(0,5) === 'Error' && this.value.length > 5){
+            ctrl.tvShow = this.value.slice(-1);
+          } else {
+            ctrl.tvShow = this.value;
+          }
+          ctrl.tvShows = [];
+
+        },
+        
       }),
     ]),
-    m('button', { onclick: ctrl.searchShow }, "Search TV Show"),
+    m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchShow }, "Search TV Show"),
     m('.show-list', [
       ctrl.tvShows.map(function(seasons) {
         console.log(seasons);
+        // <select> tag (dropdown) code below
+        // 
         // return m('select', {
         //     className: seasons.seasons.name,
         //     onchange: ctrl.playEpisode.bind(null,this.value)
@@ -60,6 +87,8 @@ TVViewer.view = function (ctrl) {
         //     }, name)
         //   })
         // )
+        // 
+        // tons of buttons below
         return m('.season', [
           m('h3', ctrl.showName + ' ' + seasons.seasons.name),
           m('.episodes', [

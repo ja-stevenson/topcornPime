@@ -11,16 +11,12 @@ m.route(document.getElementById('app'), '/', {
     view: function () {
       return [
         [
-          m('h1', "Welcome to Topcorn Pime.")
-        ],
-        [
-          m('h3', "Please type in a movie to watch")
+          m('div.page-header', {style: "text-align:center;"}, [
+              m('h1', "Topcorn Pime")
+            ])
+         
         ],
         MovieViewer,
-        [
-          m('h3', "Or find a tv show to watch below")
-        ],
-
         TVViewer
       ]
     }

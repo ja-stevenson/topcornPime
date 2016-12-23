@@ -59,19 +59,19 @@ app.get('/movieLink/*', function(req,res){
               mediaFile = sourceArray.find(x=>x.label=="240p");
             }
             if (mediaFile === undefined){
-              res.end('error1');
+              res.end({error: 'error1'});
             }
             console.log("this is it:", mediaFile.file)
             res.send(JSON.stringify(mediaFile.file));
           } else {
-            res.send('error2');
+            res.send({error: 'error2'});
           }
         } else {
-          res.send('error3');
+          res.send({error:'error3'});
         }
       });
     } else {
-      res.send('error4');
+      res.send({error: 'error4'});
     }
   })
 });
@@ -111,13 +111,13 @@ app.get('/tvShow/*', function(req,res){
         })
         allTheSeasons.push(someSeason);
       })
-      res.send(200, {
+      res.status(200).send({
         seasonCount: secondSlice.split('<strong>Season ').length - 1,
         showName: showName.substring(0, showName.indexOf(" tvshow")),
         data: allTheSeasons
       });
     } else {
-      res.send('error4');
+      res.send({error: 'error2'});
     }
   })
 });
