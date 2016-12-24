@@ -72,7 +72,7 @@ TVViewer.view = function (ctrl) {
     m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchShow }, "Search TV Show"),
     m('.show-list', [
       ctrl.tvShows.map(function(seasons) {
-        console.log(seasons);
+        // console.log(seasons);
         // <select> tag (dropdown) code below
         // 
         // return m('select', {
@@ -93,12 +93,12 @@ TVViewer.view = function (ctrl) {
           m('h3', ctrl.showName + ' ' + seasons.seasons.name),
           m('.episodes', [
             seasons.seasons.episodes.map(function(episode){
+              var epNum = episode.substring(episode.indexOf('Episode '), episode.indexOf(' - '));
               var link = episode.substring(episode.indexOf('-')+1, episode.indexOf('-online-free-putlocker.html" title='));
               var name = episode.substring(episode.indexOf(' - ')+3, episode.indexOf('"><strong>Episode'));
-              console.log('name is:', name)
+              // console.log('name is:', name)
               return m('.links', [
-                m('button', { onclick: ctrl.playEpisode.bind(null, link) }, name),
-                m('br')
+                m('button.btn.btn-link', { onclick: ctrl.playEpisode.bind(null, link) }, epNum + ': ' + name),
               ])
             })
           ])

@@ -1,7 +1,7 @@
 {
   "name": "moviescript",
   "version": "1.0.0",
-  "description": "stream any movie for free",
+  "description": "stream almost any movie or tvshow for free",
   "main": "index.js",
   "dependencies": {
     "browserify-middleware": "^7.0.0",
