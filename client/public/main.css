@@ -17,3 +17,12 @@
   border-color: #a00;
   padding: 1rem;
 }
+
+body {
+  font-size:2em;
+  text-align:center;
+}
+
+form {
+  margin: 25px;
+}
