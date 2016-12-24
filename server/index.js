@@ -45,7 +45,7 @@ app.get('/movieLink/*', function(req,res){
         if (!error && response.statusCode == 200) {
           var secondHTML = body1;
           console.log(body1,body1.length);
-          if (body1 != 'File was deleted' || body1.length > 100){
+          if (body1 !== 'File was deleted' || body1.length > 100){
             var thirdSlice = secondHTML.substring(secondHTML.indexOf('sources: [')+9);
             var fourthSlice = thirdSlice.substring(0,thirdSlice.indexOf(']')+1);
             console.log('4th',fourthSlice);
@@ -59,19 +59,19 @@ app.get('/movieLink/*', function(req,res){
               mediaFile = sourceArray.find(x=>x.label=="240p");
             }
             if (mediaFile === undefined){
-              res.end('error1');
+              res.end({error: 'Parse Error. inform your homies a fix is needed.'});
             }
             console.log("this is it:", mediaFile.file)
             res.send(JSON.stringify(mediaFile.file));
           } else {
-            res.send('error2');
+            res.send({error: 'File deleted most likely.'});
           }
         } else {
-          res.send('error3');
+          res.send({error: 'Parse Error. Inform your homies a fix is needed'});
         }
       });
     } else {
-      res.send('error4');
+      res.send({error: 'Movie not found. Check exact title "the" , "a",etc'});
     }
   })
 });
@@ -117,7 +117,7 @@ app.get('/tvShow/*', function(req,res){
         data: allTheSeasons
       });
     } else {
-      res.send('error4');
+      res.send({error: 'TV Show not found.'});
     }
   })
 });
