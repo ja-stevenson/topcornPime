@@ -34,7 +34,7 @@ TVViewer.controller = function () {
     Tv.fetch(ctrl.tvShow)
       .then(function(seasonObj){
         if(typeof seasonObj === 'string' &&   seasonObj.slice(0,5) === 'Error'){
-            ctrl.tvShow = 'Error';
+            ctrl.tvShow = seasonObj;
         } else {
           ctrl.showName = seasonObj.showName;
           console.log(seasonObj);
