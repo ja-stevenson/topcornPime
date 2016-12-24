@@ -7,5 +7,5 @@ Movie.fetch = function(movieName) {
   return m.request({ 
     method: 'GET', 
     url: 'http://localhost:3003/movieLink/' + movieName
-  }).then(errorCheck => errorCheck.error ? 'Error: Generic Error': errorCheck);
+  }).then(errorCheck => errorCheck.error ? `Error: ${errorCheck.error}`: errorCheck);
 }

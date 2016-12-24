@@ -13,7 +13,7 @@ MovieViewer.controller = function () {
         if(typeof movieLink === "string" && movieLink.slice(0,5) === 'Error'){
           // change background of textBox to red
           //formGroup.style = "form-group has-error";
-          ctrl.movie = 'Error';
+          ctrl.movie = movieLink;
           //console.log('stuff');
         } else {
            console.log(movieLink);

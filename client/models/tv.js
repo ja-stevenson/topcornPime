@@ -7,5 +7,5 @@ Tv.fetch = function(tvShow) {
   return m.request({ 
     method: 'GET', 
     url: 'http://localhost:3003/tvShow/' + tvShow
-  }).then(errorCheck => errorCheck.error ? 'Error: Generic Error': errorCheck);
+  }).then(errorCheck => errorCheck.error ? `Error: ${errorCheck.error}`: errorCheck);
 }
