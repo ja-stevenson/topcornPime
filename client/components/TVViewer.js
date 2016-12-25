@@ -7,7 +7,6 @@ var TVViewer = module.exports;
 
 TVViewer.controller = function () {
   var ctrl = this;
-
   ctrl.tvShow = null;
   ctrl.tvShows = [];
   ctrl.showName;
@@ -40,9 +39,7 @@ TVViewer.controller = function () {
           console.log(seasonObj);
           ctrl.tvShows = seasonObj.data.slice(1);
         }
-   
       })
-    // window.location.href = 'http://localhost:3003/' + ctrl.movie;
   };
 }
 
@@ -88,7 +85,7 @@ TVViewer.view = function (ctrl) {
         //   })
         // )
         // 
-        // tons of buttons below
+        // link style below
         return m('.season', [
           m('h3', ctrl.showName + ' ' + seasons.seasons.name),
           m('.episodes', [
@@ -96,7 +93,6 @@ TVViewer.view = function (ctrl) {
               var epNum = episode.substring(episode.indexOf('Episode '), episode.indexOf(' - '));
               var link = episode.substring(episode.indexOf('-')+1, episode.indexOf('-online-free-putlocker.html" title='));
               var name = episode.substring(episode.indexOf(' - ')+3, episode.indexOf('"><strong>Episode'));
-              // console.log('name is:', name)
               return m('.links', [
                 m('button.btn.btn-link', { onclick: ctrl.playEpisode.bind(null, link) }, epNum + ': ' + name),
               ])
