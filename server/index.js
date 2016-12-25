@@ -21,8 +21,34 @@ app.use( bodyParser.urlencoded({ extended: true }) );
 //        Static routes for serving up /client files
 app.use(express.static(path.join(__dirname, '../client')));
 
-app.get('/movieLink/*', function(req,res){
-  
+app.get('/movieSearch/*', function(req, res){
+  var movieName = decodeURI(req.url);
+  movieName = movieName.substring(movieName.lastIndexOf('/')).slice(1);
+  if (movieName.includes('?')){
+    movieName = movieName.substring(0,movieName.lastIndexOf('?'));
+  }
+  var url = getPlUrl(movieName)[0];
+  var theUrl = 'http://putlockers.ch/search/advanced_search.php?section=0&q=' + movieName;
+  request(theUrl, function (error, response, body) {
+    if (!error && response.statusCode == 200) { 
+      var html = body;
+      var firstSlice = html.substring(html.indexOf('<input type="hidden" name="genre[]" value="0"></form>')+ 277);
+      // console.log('the body', firstSlice);
+      var secondSlice = firstSlice.substring(0,firstSlice.indexOf('</table><p />'));
+      var movieOptions = secondSlice.split('</tr>\n<tr>\n').join('').split('<a href="');
+      // console.log('my stuff: ', movieOptions);
+      var choiceMovies = [];
+      for(var i = 0; i < movieOptions.length; i++){
+        if(i % 2 && !movieOptions[i].includes('tvshow-online-free')){
+          choiceMovies.push(movieOptions[i]);
+        }
+      }
+      res.send({data: choiceMovies});
+    }
+  })
+})
+
+app.get('/movieLink/*', function(req, res){
   var movieName = decodeURI(req.url);
   // console.log("does this work?", movieName);
   movieName = movieName.substring(movieName.lastIndexOf('/')).slice(1);
