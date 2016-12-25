@@ -7,7 +7,8 @@ MovieViewer.controller = function () {
   var ctrl = this;
 
   ctrl.movie = null;
-  ctrl.searchMovie = function(formGroup){
+  ctrl.movieList = [];
+  ctrl.playMovie = function(formGroup){
     Movie.fetch(ctrl.movie)
       .then(function(movieLink){
         if(typeof movieLink === "string" && movieLink.slice(0,5) === 'Error'){
@@ -21,6 +22,20 @@ MovieViewer.controller = function () {
         }
       })
   };
+  ctrl.searchMovie = function(formGroup){
+    Movie.search(ctrl.movie)
+      .then(function(movieLinks){
+        if(typeof movieLinks === "string" && movieLink.slice(0,5) === 'Error'){
+          // change background of textBox to red
+          //formGroup.style = "form-group has-error";
+          ctrl.movie = movieLinks;
+          //console.log('stuff');
+        } else {
+          console.log(movieLinks);
+          ctrl.movieList = movieLinks.data;
+        }
+      })
+  };
 }
 
 MovieViewer.view = function (ctrl) {
@@ -29,8 +44,8 @@ MovieViewer.view = function (ctrl) {
     m('form.form-group', 
       { 
         onsubmit: function(e){ 
-                    e.preventDefault();
-                    ctrl.searchMovie(e.target);
+          e.preventDefault();
+          ctrl.searchMovie(e.target);
       } 
     }, 
     [
@@ -56,5 +71,15 @@ MovieViewer.view = function (ctrl) {
       }),
     ]),
     m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchMovie }, "Search Movie"),
+    m('.movie-list', [
+      ctrl.movieList.map(function(movie) {
+        var link = movie.substring(movie.indexOf('-')+1, movie.indexOf('-online-free-putlocker.html" title='));
+        var name = movie.substring(movie.indexOf('title="')+7, movie.indexOf('"><img'));
+        return m('.links', [
+          m('button.btn.btn-link', { onclick: ctrl.playMovie.bind(null, link) }, name),
+        ])
+      })
+    ])
   ])
-}
+}      
+
