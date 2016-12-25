@@ -9,7 +9,7 @@ MovieViewer.controller = function () {
   ctrl.movie = null;
   ctrl.movieList = [];
   ctrl.playMovie = function(formGroup){
-    Movie.fetch(ctrl.movie)
+    Movie.fetch(formGroup)
       .then(function(movieLink){
         if(typeof movieLink === "string" && movieLink.slice(0,5) === 'Error'){
           // change background of textBox to red
