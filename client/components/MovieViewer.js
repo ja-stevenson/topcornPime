@@ -29,7 +29,6 @@ MovieViewer.controller = function () {
           // change background of textBox to red
           //formGroup.style = "form-group has-error";
           ctrl.movie = movieList;
-          //console.log('stuff');
         } else {
           console.log(movieList);
           ctrl.movieList = movieList.data;
@@ -75,7 +74,11 @@ MovieViewer.view = function (ctrl) {
       ctrl.movieList.map(function(movie) {
         var link = movie.substring(movie.indexOf('-')+1, movie.indexOf('-online-free-putlocker.html" title='));
         var name = movie.substring(movie.indexOf('title="')+7, movie.indexOf('"><img'));
+        var img = movie.substring(movie.indexOf('src="')+5, movie.indexOf('" border'));
         return m('.links', [
+          // m("svg[height='200px'][width='200px']", [
+          //   m('image[href="' + img + '"][height="200px"][width="200px"]')
+          // ]),
           m('button.btn.btn-link', { onclick: ctrl.playMovie.bind(null, link) }, name),
         ])
       })

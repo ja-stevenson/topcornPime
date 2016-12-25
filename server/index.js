@@ -45,7 +45,6 @@ app.get('/movieSearch/*', function(req, res){
 app.get('/movieLink/*', function(req, res){
   var movieName = helpers.formatter(req.url);
   var url = getPlUrl(movieName)[0];
-  console.log(url);
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) { 
       var html = body;
@@ -59,13 +58,10 @@ app.get('/movieLink/*', function(req, res){
       request(secondUrl, function(error, response, body1) {
         if (!error && response.statusCode == 200) {
           var secondHTML = body1;
-          console.log(body1,body1.length);
           if (body1 !== 'File was deleted' || body1.length > 100){
             var thirdSlice = secondHTML.substring(secondHTML.indexOf('sources: [')+9);
             var fourthSlice = thirdSlice.substring(0,thirdSlice.indexOf(']')+1);
-            console.log('4th',fourthSlice);
             var sourceArray = eval(fourthSlice);
-            console.log(sourceArray);
             var mediaFile = sourceArray.find(x=>x.label=="720p");
             if (mediaFile === undefined){
               mediaFile = sourceArray.find(x=>x.label=="360p");
@@ -113,7 +109,7 @@ app.get('/tvShow/*', function(req,res){
   })
 });
 
-//        Start the server on PORT 3003
+// Start the server on PORT 3003
 app.listen(3003, function(){
   console.log('Express app listening on port 3003');
 });
