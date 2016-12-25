@@ -24,15 +24,15 @@ MovieViewer.controller = function () {
   };
   ctrl.searchMovie = function(formGroup){
     Movie.search(ctrl.movie)
-      .then(function(movieLinks){
-        if(typeof movieLinks === "string" && movieLink.slice(0,5) === 'Error'){
+      .then(function(movieList){
+        if(typeof movieList === "string"){
           // change background of textBox to red
           //formGroup.style = "form-group has-error";
-          ctrl.movie = movieLinks;
+          ctrl.movie = movieList;
           //console.log('stuff');
         } else {
-          console.log(movieLinks);
-          ctrl.movieList = movieLinks.data;
+          console.log(movieList);
+          ctrl.movieList = movieList.data;
         }
       })
   };
