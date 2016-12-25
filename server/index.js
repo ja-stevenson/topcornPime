@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var path = require('path');
 var getPlUrl = require('./model/url');
+var helpers = require('./model/helpers');
 
 var app = express();
 app.get('/scripts/app-bundle.js', 
@@ -22,39 +23,27 @@ app.use( bodyParser.urlencoded({ extended: true }) );
 app.use(express.static(path.join(__dirname, '../client')));
 
 app.get('/movieSearch/*', function(req, res){
-  var movieName = decodeURI(req.url);
-  movieName = movieName.substring(movieName.lastIndexOf('/')).slice(1);
-  if (movieName.includes('?')){
-    movieName = movieName.substring(0,movieName.lastIndexOf('?'));
-  }
+  var movieName = helpers.formatter(req.url);
   var url = getPlUrl(movieName)[0];
   var theUrl = 'http://putlockers.ch/search/advanced_search.php?section=0&q=' + movieName;
   request(theUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) { 
       var html = body;
       var firstSlice = html.substring(html.indexOf('<input type="hidden" name="genre[]" value="0"></form>')+ 277);
-      // console.log('the body', firstSlice);
       var secondSlice = firstSlice.substring(0,firstSlice.indexOf('</table><p />'));
       var movieOptions = secondSlice.split('</tr>\n<tr>\n').join('').split('<a href="');
-      // console.log('my stuff: ', movieOptions);
-      var choiceMovies = [];
-      for(var i = 0; i < movieOptions.length; i++){
-        if(i % 2 && !movieOptions[i].includes('tvshow-online-free')){
-          choiceMovies.push(movieOptions[i]);
-        }
+      var choiceMovies = helpers.movieListBuilder(movieOptions);
+      if(choiceMovies.length){
+        res.send({data: choiceMovies});
+      } else {
+        res.send({error: 'No movies match your search criteria'});
       }
-      res.send({data: choiceMovies});
     }
   })
 })
 
 app.get('/movieLink/*', function(req, res){
-  var movieName = decodeURI(req.url);
-  // console.log("does this work?", movieName);
-  movieName = movieName.substring(movieName.lastIndexOf('/')).slice(1);
-  if (movieName.includes('?')){
-    movieName = movieName.substring(0,movieName.lastIndexOf('?'));
-  }
+  var movieName = helpers.formatter(req.url);
   var url = getPlUrl(movieName)[0];
   console.log(url);
   request(url, function (error, response, body) {
@@ -103,40 +92,16 @@ app.get('/movieLink/*', function(req, res){
 });
 
 app.get('/tvShow/*', function(req,res){
-  
   var showName = decodeURI(req.url) + ' tvshow';
-  // console.log("does this work?", showName);
-  showName = showName.substring(showName.lastIndexOf('/')).slice(1);
-  if (showName.includes('?')){
-    showName = showName.substring(0,showName.lastIndexOf('?'));
-  }
+  showName = helpers.formatter(showName);
   var url = getPlUrl(showName)[0] ;
-  console.log(url);
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) { 
       var html = body;
-      // console.log('the html is:', html);
       var firstSlice = html.substring(html.indexOf('<h2 style="color:green;margin-bottom:0px !important;border-top:1px solid silver;padding:5px;background-color:beige;"><a class="selector_name" href=')+147);
       var secondSlice = firstSlice.substring(0,firstSlice.indexOf('<h2 style="color:green;margin-bottom:0px !important;border-top:1px solid silver;padding:5px;background-color:beige;"><strong>'));
       var whatINeed = secondSlice.split('<strong>Season ');
-      var allTheSeasons = []
-      whatINeed.map(function(seasons){  
-        var someSeason = {};
-        someSeason.seasons = {};
-        var seasonName = 'Season '+ seasons.substring(0,seasons.indexOf('<'));
-        var season = seasons.split('<td width="100%" class="entry"><a href=').slice(1);
-        someSeason.seasons.name = seasonName;
-        someSeason.seasons.episodes = season;
-        season.forEach(function(episodes){
-          var episodesArray = episodes.split('</td></tr><tr><td class="entry"><img src="http://putlockers.ch/images/bullet.gif" border="0"></td><td width="100%" class="entry">')
-          episodesArray.forEach(function(episode){
-            var epName = episode.substring(episode.indexOf('title="')+7, episode.indexOf('"><strong>'))
-            var theLink = episode.substring(episode.indexOf('http'), episode.indexOf('" title'));
-            someSeason.seasons.episodes[epName] = theLink
-          })
-        })
-        allTheSeasons.push(someSeason);
-      })
+      var allTheSeasons = helpers.seasonBuilder(whatINeed);
       res.send(200, {
         seasonCount: secondSlice.split('<strong>Season ').length - 1,
         showName: showName.substring(0, showName.indexOf(" tvshow")).toUpperCase(),
