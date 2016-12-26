@@ -1,6 +1,5 @@
 var m = require('mithril');
 
-
 var Movie = module.exports;
 
 Movie.fetch = function(movieName) {
