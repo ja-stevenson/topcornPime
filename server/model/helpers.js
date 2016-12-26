@@ -36,5 +36,14 @@ module.exports = {
       }
     }
     return choiceMovies;
+  },
+  tvListBuilder: function(movieOptions){
+    var choiceMovies = [];
+    for(var i = 0; i < movieOptions.length; i++){
+      if(i % 2 && movieOptions[i].includes('tvshow-online-free')){
+        choiceMovies.push(movieOptions[i]);
+      }
+    }
+    return choiceMovies;
   }
 }
