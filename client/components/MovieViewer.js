@@ -8,29 +8,25 @@ MovieViewer.controller = function () {
 
   ctrl.movie = null;
   ctrl.movieList = [];
-  ctrl.playMovie = function(formGroup){
-    Movie.fetch(formGroup)
+
+  ctrl.playMovie = function(movieName){
+    Movie.fetch(movieName)
       .then(function(movieLink){
         if(typeof movieLink === "string" && movieLink.slice(0,5) === 'Error'){
-          // change background of textBox to red
-          //formGroup.style = "form-group has-error";
           ctrl.movie = movieLink;
-          //console.log('stuff');
         } else {
-           console.log(movieLink);
            window.location.href = movieLink;
         }
       })
   };
+
   ctrl.searchMovie = function(formGroup){
     Movie.search(ctrl.movie)
       .then(function(movieList){
         if(typeof movieList === "string"){
           // change background of textBox to red
-          //formGroup.style = "form-group has-error";
           ctrl.movie = movieList;
         } else {
-          console.log(movieList);
           ctrl.movieList = movieList.data;
         }
       })
