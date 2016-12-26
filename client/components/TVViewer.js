@@ -9,6 +9,7 @@ TVViewer.controller = function () {
   var ctrl = this;
   ctrl.tvShow = null;
   ctrl.tvShows = [];
+  ctrl.tvShowList = [];
   ctrl.showName;
   ctrl.show;
   ctrl.playEpisode = function(link){
@@ -28,9 +29,8 @@ TVViewer.controller = function () {
         */
       })
   };
-  ctrl.searchShow = function(){
-    console.log("show is: ", ctrl.tvShow);
-    Tv.fetch(ctrl.tvShow)
+  ctrl.findShow = function(showLink){
+    Tv.fetch(showLink)
       .then(function(seasonObj){
         if(typeof seasonObj === 'string' &&   seasonObj.slice(0,5) === 'Error'){
             ctrl.tvShow = seasonObj;
@@ -38,6 +38,19 @@ TVViewer.controller = function () {
           ctrl.showName = seasonObj.showName;
           console.log(seasonObj);
           ctrl.tvShows = seasonObj.data.slice(1);
+          ctrl.tvShowList = [];
+        }
+      })
+  };
+  ctrl.searchShow = function(){
+    console.log("show is: ", ctrl.tvShow);
+    Tv.search(ctrl.tvShow)
+      .then(function(showList){
+        if(typeof showList === 'string' &&   showList.slice(0,5) === 'Error'){
+            ctrl.tvShowList = showList;
+        } else {
+          console.log(showList);
+          ctrl.tvShowList = showList.data;
         }
       })
   };
@@ -67,6 +80,21 @@ TVViewer.view = function (ctrl) {
       }),
     ]),
     m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchShow }, "Search TV Show"),
+    m('.shows-list', [
+      ctrl.tvShowList.map(function(series) {
+        // console.log('series is: ');
+        var link = series.substring(series.indexOf('-')+1, series.indexOf('-tvshow-online-free-putlocker.html" title='));
+        var name = series.substring(series.indexOf('title="')+7, series.indexOf('"><img'));
+        var img = series.substring(series.indexOf('src="')+5, series.indexOf('" border'));
+        console.log('the link is: ', link)
+        return m('.links', [
+          // m("svg[height='200px'][width='200px']", [
+          //   m('image[href="' + img + '"][height="200px"][width="200px"]')
+          // ]),
+          m('button.btn.btn-link', { onclick: ctrl.findShow.bind(null, link) }, name),
+        ])
+      })
+    ]),
     m('.show-list', [
       ctrl.tvShows.map(function(seasons) {
         // console.log(seasons);

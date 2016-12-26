@@ -87,6 +87,26 @@ app.get('/movieLink/*', function(req, res){
   })
 });
 
+app.get('/tvSearch/*', function(req, res){
+  var movieName = helpers.formatter(req.url);
+  var url = getPlUrl(movieName)[0];
+  var theUrl = 'http://putlockers.ch/search/advanced_search.php?section=0&q=' + movieName;
+  request(theUrl, function (error, response, body) {
+    if (!error && response.statusCode == 200) { 
+      var html = body;
+      var firstSlice = html.substring(html.indexOf('<input type="hidden" name="genre[]" value="0"></form>')+ 277);
+      var secondSlice = firstSlice.substring(0,firstSlice.indexOf('</table><p />'));
+      var movieOptions = secondSlice.split('</tr>\n<tr>\n').join('').split('<a href="');
+      var choiceTvShows = helpers.tvListBuilder(movieOptions);
+      if(choiceTvShows.length){
+        res.send({data: choiceTvShows});
+      } else {
+        res.send({error: 'No shows match your search criteria'});
+      }
+    }
+  })
+})
+
 app.get('/tvShow/*', function(req,res){
   var showName = decodeURI(req.url) + ' tvshow';
   showName = helpers.formatter(showName);
