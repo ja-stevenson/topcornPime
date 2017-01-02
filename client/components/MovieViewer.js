@@ -27,7 +27,7 @@ MovieViewer.controller = function () {
           // change background of textBox to red
           ctrl.movie = movieList;
         } else {
-          ctrl.movieList = movieList.data;
+          ctrl.movieList = sortByYear(movieList.data);
         }
       })
   };
@@ -64,13 +64,15 @@ MovieViewer.view = function (ctrl) {
             ? this.value = '' : true;
         }
       }),
+      m('button.btn', { class: "btn-primary btn-lg", type: "submit"}, "Search Movie"),
     ]),
-    m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchMovie }, "Search Movie"),
     m('.movie-list', [
       ctrl.movieList.map(function(movie) {
-        var link = movie.substring(movie.indexOf('-')+1, movie.indexOf('-online-free-putlocker.html" title='));
+        var link = movie.substring(movie.indexOf('-')+1, movie.indexOf('title=')-29);
         var name = movie.substring(movie.indexOf('title="')+7, movie.indexOf('"><img'));
         var img = movie.substring(movie.indexOf('src="')+5, movie.indexOf('" border'));
+        var year = name.substring(name.lastIndexOf('(')+1, name.lastIndexOf(')'));
+        // console.log(year);
         return m('.links', [
           // m("svg[height='200px'][width='200px']", [
           //   m('image[href="' + img + '"][height="200px"][width="200px"]')
@@ -80,5 +82,19 @@ MovieViewer.view = function (ctrl) {
       })
     ])
   ])
-}      
+}
 
+function sortByYear(movieList){
+  return movieList.sort(function(a,b){
+    var yearAsub = a.substring(a.indexOf('title="')+7, a.indexOf('"><img'));
+    var yearBsub = b.substring(b.indexOf('title="')+7, b.indexOf('"><img'));
+    var yearA = Number(yearAsub.substring(yearAsub.lastIndexOf('(')+1, yearAsub.lastIndexOf(')')));
+    var yearB = Number(yearBsub.substring(yearBsub.lastIndexOf('(')+1, yearBsub.lastIndexOf(')')));
+    console.log('yearA is: ', yearA, 'and yearB is: ', yearB);
+    if (yearB < yearA){
+      return 1;
+    } else {
+      return -1;
+    }
+  })
+}

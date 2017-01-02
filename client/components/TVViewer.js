@@ -86,9 +86,9 @@ TVViewer.view = function (ctrl) {
       ctrl.tvShows.map(function(seasons) {
         // console.log(seasons);
         // <select> tag (dropdown) code below
-        // 
         // return m('select', {
         //     className: seasons.seasons.name,
+        // //  this.value in the onchange is probably window at this time.
         //     onchange: ctrl.playEpisode.bind(null,this.value)
         //   },
         //   seasons.seasons.episodes.map(function(episode){
@@ -99,7 +99,6 @@ TVViewer.view = function (ctrl) {
         //     }, name)
         //   })
         // )
-        // 
         // link style below
         return m('.season', [
           m('h3', ctrl.showName + ' ' + seasons.seasons.name),
