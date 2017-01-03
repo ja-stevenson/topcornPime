@@ -63,12 +63,11 @@ TVViewer.view = function (ctrl) {
             ctrl.tvShow = this.value;
           }
           ctrl.tvShows = [];
-
-        },
-        
+        }
       }),
+      m('br'),
+      m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchShow }, "Search TV Show"),
     ]),
-    m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchShow }, "Search TV Show"),
     m('.shows-list', [
       ctrl.tvShowList.map(function(series) {
         var link = series.substring(series.indexOf('-')+1, series.indexOf('-tvshow-online-free-putlocker.html" title='));

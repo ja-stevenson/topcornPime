@@ -64,6 +64,7 @@ MovieViewer.view = function (ctrl) {
             ? this.value = '' : true;
         }
       }),
+      m('br'),
       m('button.btn', { class: "btn-primary btn-lg", type: "submit"}, "Search Movie"),
     ]),
     m('.movie-list', [
@@ -72,7 +73,6 @@ MovieViewer.view = function (ctrl) {
         var name = movie.substring(movie.indexOf('title="')+7, movie.indexOf('"><img'));
         var img = movie.substring(movie.indexOf('src="')+5, movie.indexOf('" border'));
         var year = name.substring(name.lastIndexOf('(')+1, name.lastIndexOf(')'));
-        // console.log(year);
         return m('.links', [
           // m("svg[height='200px'][width='200px']", [
           //   m('image[href="' + img + '"][height="200px"][width="200px"]')
