@@ -118,7 +118,7 @@ app.get('/tvShow/*', function(req,res){
       var secondSlice = firstSlice.substring(0,firstSlice.indexOf('<h2 style="color:green;margin-bottom:0px !important;border-top:1px solid silver;padding:5px;background-color:beige;"><strong>'));
       var whatINeed = secondSlice.split('<strong>Season ');
       var allTheSeasons = helpers.seasonBuilder(whatINeed);
-      res.send(200, {
+      res.send({
         seasonCount: secondSlice.split('<strong>Season ').length - 1,
         showName: showName.substring(0, showName.indexOf(" tvshow")).toUpperCase(),
         data: allTheSeasons
