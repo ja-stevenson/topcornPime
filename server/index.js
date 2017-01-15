@@ -74,6 +74,7 @@ app.get('/movieLink/*', function(req, res){
             }
             console.log("this is it:", mediaFile.file)
             res.send(JSON.stringify(mediaFile.file));
+            // res.redirect(mediaFile.file);
           } else {
             res.send({error: 'File deleted most likely.'});
           }
