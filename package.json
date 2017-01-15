@@ -14,7 +14,7 @@
   "devDependencies": {
   },
   "scripts": {
-    "start": "open http://localhost:3003 && nodemon server/index.js"
+    "start": "nodemon server/index.js"
   },
   "contributors": [
     "Jimmy Stevenson",
