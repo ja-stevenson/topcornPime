@@ -8,13 +8,16 @@ TVViewer.controller = function () {
   var ctrl = this;
 
   ctrl.tvShow = null;
-  ctrl.tvShows = [];
+  ctrl.tvShows = JSON.parse(localStorage.getItem('tvShows')) || [];
   ctrl.tvShowList = [];
-  ctrl.showName;
+  ctrl.showName = JSON.parse(localStorage.getItem('showName')) || null;
+  ctrl.showLink;
 
   ctrl.playEpisode = function(link){
     Movie.fetch(link)
       .then(function(movieLink){
+        localStorage.setItem('showName', JSON.stringify(ctrl.showName).toUpperCase());
+        localStorage.setItem('tvShows', JSON.stringify(ctrl.tvShows));
         window.location.href = movieLink;
       })
   };
@@ -22,8 +25,8 @@ TVViewer.controller = function () {
   ctrl.getSeasonsAndEpisodes = function(showLink){
     Tv.fetch(showLink)
       .then(function(seasonObj){
-        if(typeof seasonObj === 'string' &&   seasonObj.slice(0,5) === 'Error'){
-            ctrl.tvShow = seasonObj;
+        if(typeof seasonObj === 'string' && seasonObj.slice(0,5) === 'Error'){
+          ctrl.tvShow = seasonObj;
         } else {
           ctrl.showName = seasonObj.showName;
           ctrl.tvShows = seasonObj.data.slice(1);
@@ -35,8 +38,8 @@ TVViewer.controller = function () {
   ctrl.searchShow = function(){
     Tv.search(ctrl.tvShow)
       .then(function(showList){
-        if(typeof showList === 'string' &&   showList.slice(0,5) === 'Error'){
-            ctrl.tvShowList = showList;
+        if(typeof showList === 'string' && showList.slice(0,5) === 'Error'){
+          ctrl.tvShowList = showList;
         } else {
           console.log(showList);
           ctrl.tvShowList = showList.data;
