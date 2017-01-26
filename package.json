@@ -4,17 +4,22 @@
   "description": "stream almost any movie or tvshow for free",
   "main": "index.js",
   "dependencies": {
-    "browserify-middleware": "^7.0.0",
     "body-parser": "^1.15.2",
+    "browserify-middleware": "^7.0.0",
     "express": "^4.14.0",
     "mithril": "0.2.2-rc.1",
     "nodemon": "^1.10.2",
     "request": "^2.74.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "supertest": "^2.0.1",
+    "supertest-as-promised": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --bail --reporter nyan server/test/serverSpec.js"
   },
   "contributors": [
     "Jimmy Stevenson",

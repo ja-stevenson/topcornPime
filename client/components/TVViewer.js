@@ -41,7 +41,7 @@ TVViewer.controller = function () {
         if(typeof showList === 'string' && showList.slice(0,5) === 'Error'){
           ctrl.tvShowList = showList;
         } else {
-          console.log(showList);
+          // console.log(showList);
           ctrl.tvShowList = showList.data;
         }
       })
@@ -109,6 +109,7 @@ TVViewer.view = function (ctrl) {
               var epNum = episode.substring(episode.indexOf('Episode '), episode.indexOf(' - '));
               var link = episode.substring(episode.indexOf('-')+1, episode.indexOf('-online-free-putlocker.html" title='));
               var name = episode.substring(episode.indexOf(' - ')+3, episode.indexOf('"><strong>Episode'));
+              console.log(link);
               return m('.links', [
                 m('button.btn.btn-link', { onclick: ctrl.playEpisode.bind(null, link) }, epNum + ': ' + name),
               ])

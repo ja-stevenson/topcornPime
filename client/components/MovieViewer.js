@@ -12,10 +12,11 @@ MovieViewer.controller = function () {
   ctrl.playMovie = function(movieName){
     Movie.fetch(movieName)
       .then(function(movieLink){
+        // console.log(movieLink);
         if(typeof movieLink === "string" && movieLink.slice(0,5) === 'Error'){
           ctrl.movie = movieLink;
         } else {
-           window.location.href = movieLink;
+          window.location.href = movieLink;
         }
       })
   };
@@ -23,6 +24,7 @@ MovieViewer.controller = function () {
   ctrl.searchMovie = function(formGroup){
     Movie.search(ctrl.movie)
       .then(function(movieList){
+        // console.log(movieList);
         if(typeof movieList === "string"){
           // change background of textBox to red
           ctrl.movie = movieList;
@@ -90,7 +92,7 @@ function sortByYear(movieList){
     var yearBsub = b.substring(b.indexOf('title="')+7, b.indexOf('"><img'));
     var yearA = Number(yearAsub.substring(yearAsub.lastIndexOf('(')+1, yearAsub.lastIndexOf(')')));
     var yearB = Number(yearBsub.substring(yearBsub.lastIndexOf('(')+1, yearBsub.lastIndexOf(')')));
-    console.log('yearA is: ', yearA, 'and yearB is: ', yearB);
+    // console.log('yearA is: ', yearA, 'and yearB is: ', yearB);
     if (yearB < yearA){
       return 1;
     } else {
