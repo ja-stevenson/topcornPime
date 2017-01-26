@@ -69,7 +69,7 @@ TVViewer.view = function (ctrl) {
         }
       }),
       m('br'),
-      m('button.btn', { class: "btn-primary btn-lg", onclick: ctrl.searchShow }, "Search TV Show"),
+      m('button.btn', { class: "btn-success btn-lg", onclick: ctrl.searchShow }, "Search TV Show"),
     ]),
     m('.shows-list', [
       ctrl.tvShowList.map(function(series) {
