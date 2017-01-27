@@ -5,7 +5,7 @@ window.m = require('mithril');
 var MovieViewer = require('./components/MovieViewer');
 var TVViewer = require('./components/TVViewer');
 
-var movieDisplay = MovieViewer;
+var movieDisplay = TVViewer;
 
 m.route(document.getElementById('app'), '/', {
 
