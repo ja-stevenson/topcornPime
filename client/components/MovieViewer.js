@@ -12,7 +12,6 @@ MovieViewer.controller = function () {
   ctrl.playMovie = function(movieName){
     Movie.fetch(movieName)
       .then(function(movieLink){
-        // console.log(movieLink);
         if(typeof movieLink === "string" && movieLink.slice(0,5) === 'Error'){
           ctrl.movie = movieLink;
         } else {
@@ -24,7 +23,6 @@ MovieViewer.controller = function () {
   ctrl.searchMovie = function(formGroup){
     Movie.search(ctrl.movie)
       .then(function(movieList){
-        // console.log(movieList);
         if(typeof movieList === "string"){
           // change background of textBox to red
           ctrl.movie = movieList;

@@ -89,9 +89,9 @@ app.get('/movieLink/*', function(req, res){
 });
 
 app.get('/tvSearch/*', function(req, res){
-  var movieName = helpers.formatter(req.url);
-  var url = getPlUrl(movieName)[0];
-  var theUrl = 'http://putlockers.ch/search/advanced_search.php?section=0&q=' + movieName;
+  var showName = helpers.formatter(req.url);
+  var url = getPlUrl(showName)[0];
+  var theUrl = 'http://putlockers.ch/search/advanced_search.php?section=0&q=' + showName;
   request(theUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) { 
       var html = body;
@@ -101,8 +101,8 @@ app.get('/tvSearch/*', function(req, res){
       } else {
         var secondSlice = firstSlice.substring(0,firstSlice.indexOf('</table><p />'));
       }
-      var movieOptions = secondSlice.split('</tr>\n<tr>\n').join('').split('<a href="');
-      var choiceTvShows = helpers.tvListBuilder(movieOptions);
+      var showOptions = secondSlice.split('</tr>\n<tr>\n').join('').split('<a href="');
+      var choiceTvShows = helpers.tvListBuilder(showOptions);
       if(choiceTvShows.length){
         res.send({data: choiceTvShows});
       } else {
