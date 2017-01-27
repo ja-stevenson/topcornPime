@@ -70,7 +70,7 @@ app.get('/movieLink/*', function(req, res){
               mediaFile = sourceArray.find(x=>x.label=="240p");
             }
             if (mediaFile === undefined){
-              res.end({error: 'Parse Error. inform your homies a fix is needed.'});
+              res.end({error: 'Parse Error. inform your devs a fix is needed.'});
             }
             console.log("this is it:", mediaFile.file)
             res.send(JSON.stringify(mediaFile.file));
@@ -96,7 +96,11 @@ app.get('/tvSearch/*', function(req, res){
     if (!error && response.statusCode == 200) { 
       var html = body;
       var firstSlice = html.substring(html.indexOf('<input type="hidden" name="genre[]" value="0"></form>')+ 277);
-      var secondSlice = firstSlice.substring(0,firstSlice.indexOf('</table><p />'));
+      if(firstSlice.includes('Movies Page 2">Next</a>')){
+        var secondSlice = firstSlice.substring(0,firstSlice.indexOf('</a></td></tr></table>'));
+      } else {
+        var secondSlice = firstSlice.substring(0,firstSlice.indexOf('</table><p />'));
+      }
       var movieOptions = secondSlice.split('</tr>\n<tr>\n').join('').split('<a href="');
       var choiceTvShows = helpers.tvListBuilder(movieOptions);
       if(choiceTvShows.length){
