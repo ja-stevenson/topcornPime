@@ -14,10 +14,8 @@ module.exports = app;
 app.use(express.static('client/public'));
 var decodeDoIt = require('./decoderRing');
 
-
 app.use( bodyParser.json() );      // Parse JSON request body
 app.use( bodyParser.urlencoded({ extended: true }) );
-
 
 //        Static routes for serving up /client files
 app.use(express.static(path.join(__dirname, '../client')));
@@ -70,7 +68,7 @@ app.get('/movieLink/*', function(req, res){
               mediaFile = sourceArray.find(x=>x.label=="240p");
             }
             if (mediaFile === undefined){
-              res.end({error: 'Parse Error. inform your devs a fix is needed.'});
+              res.end({error: 'Parse Error. Inform your homies a fix is needed.'});
             }
             console.log("this is it:", mediaFile.file)
             res.send(JSON.stringify(mediaFile.file));

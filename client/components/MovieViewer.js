@@ -90,7 +90,6 @@ function sortByYear(movieList){
     var yearBsub = b.substring(b.indexOf('title="')+7, b.indexOf('"><img'));
     var yearA = Number(yearAsub.substring(yearAsub.lastIndexOf('(')+1, yearAsub.lastIndexOf(')')));
     var yearB = Number(yearBsub.substring(yearBsub.lastIndexOf('(')+1, yearBsub.lastIndexOf(')')));
-    // console.log('yearA is: ', yearA, 'and yearB is: ', yearB);
     if (yearB < yearA){
       return 1;
     } else {
