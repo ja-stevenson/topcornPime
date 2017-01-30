@@ -5,7 +5,7 @@ window.m = require('mithril');
 var MovieViewer = require('./components/MovieViewer');
 var TVViewer = require('./components/TVViewer');
 
-var movieDisplay = TVViewer;
+var movieDisplay = localStorage.getItem('display') === 'movie' ? MovieViewer : TVViewer;
 
 m.route(document.getElementById('app'), '/', {
 
@@ -37,9 +37,11 @@ m.route(document.getElementById('app'), '/', {
 });
 
 function displayTV(){
+  localStorage.setItem('display', 'tv');
   movieDisplay = TVViewer;
 }
 
 function displayMovie(){
+  localStorage.setItem('display', 'movie');
   movieDisplay = MovieViewer;
 }
