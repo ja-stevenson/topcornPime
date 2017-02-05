@@ -26,6 +26,7 @@ TVViewer.controller = function () {
     Tv.fetch(showLink)
       .then(function(seasonObj){
         if(typeof seasonObj === 'string' && seasonObj.slice(0,5) === 'Error'){
+          console.log('where are i')
           ctrl.tvShow = seasonObj;
         } else {
           ctrl.showName = seasonObj.showName;

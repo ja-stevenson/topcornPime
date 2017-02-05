@@ -1,5 +1,13 @@
 # topcornPime
 
-added for testing
+To Use: 
 
-another for testing again
+git clone to a directory
+
+navigate to that directory
+
+npm install
+
+npm start
+
+go to http://localhost:3003 in your favorite browser
