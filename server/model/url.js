@@ -2,7 +2,7 @@
 module.exports = getPlUrl;
 
 function getPlUrl(movieName){
-  var start = 'http://putlockers.ch/watch-';
+  var start = 'http://putlocker.is/watch-';
   var end = '-online-free-putlocker.html';
   // =========== manual removals ================
   movieName = movieName.toLowerCase();

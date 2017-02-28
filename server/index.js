@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.get('/movieSearch/*', function(req, res){
   var movieName = helpers.formatter(req.url);
   var url = getPlUrl(movieName)[0];
-  var theUrl = 'http://putlockers.ch/search/advanced_search.php?section=0&q=' + movieName;
+  var theUrl = 'http://putlocker.is/search/advanced_search.php?section=0&q=' + movieName;
   request(theUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) { 
       var html = body;
@@ -89,7 +89,7 @@ app.get('/movieLink/*', function(req, res){
 app.get('/tvSearch/*', function(req, res){
   var showName = helpers.formatter(req.url);
   var url = getPlUrl(showName)[0];
-  var theUrl = 'http://putlockers.ch/search/advanced_search.php?section=0&q=' + showName;
+  var theUrl = 'http://putlocker.is/search/advanced_search.php?section=0&q=' + showName;
   request(theUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) { 
       var html = body;
